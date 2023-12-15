@@ -6,8 +6,11 @@ def git_pull_in_directories(root_dir='.'):
         if '.git' in dirnames:
             git_directory = os.path.join(dirpath, '.git')
             try:
-                subprocess.run(['git', 'stash .'], cwd=dirpath, check=True)
+                # Stash changes
+                subprocess.run(['git', 'stash', '.'], cwd=dirpath, check=True)
+                # Checkout the main branch
                 subprocess.run(['git', 'checkout', 'main'], cwd=dirpath, check=True)
+                # Pull new changes
                 subprocess.run(['git', 'pull'], cwd=dirpath, check=True)
                 print(f"Git pull successful in {dirpath}")
             except subprocess.CalledProcessError as e:
